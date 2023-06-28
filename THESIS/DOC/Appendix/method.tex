@@ -1,0 +1,16 @@
+\subsection{Tập dữ liệu và black box}
+\subsubsection{Chest X-Ray Images with Pneumothorax Mask}
+Trong công trình này chúng tôi thực hiện thí nghiệm trên tập dữ liệu Chest X-Ray Images with Pneumothorax Mask \cite{pneumothorax}. Đây là tập dữ liệu được cung cấp ở giai đoạn 1 cuộc thi SIIM-ACR Pneumothorax Segmentation để huấn luyện mô hình. Tập dữ liệu chứa 12047 ảnh chụp X-quang phổi để phân loại bệnh nhân có bị mắc chứng tràn khí màng phổi (pneumothorax) hay không, ngoài ra nó còn cung cấp tập ảnh mask tương ứng với vùng mô phổi bất thường. 
+
+
+\subsubsection{Resnet50 \& InceptionV3}
+Chúng tôi chọn khảo sát trên Resnet50, InceptionV3 vì kiến trúc CNN phức tạp cộng với việc chúng đã được chứng minh đạt độ chính xác cao trong tác vụ phân loại ảnh XRay ở công trình của Ali Narin và đồng nghiệp \cite{covidXray}
+
+\subsubsubsection{InceptionV3}
+
+
+
+\subsection{Các phương pháp saliency được sử dụng}
+
+\subsection{Các metric}
+Để đánh giá sự bất đồng giữa các phương pháp saliency, chúng tôi sử dụng một số độ đo đã được sử dụng ở các bài báo tiên phong, với một chút điều chỉnh để phù hợp khi ứng dụng trên dữ liệu dạng heatmap.

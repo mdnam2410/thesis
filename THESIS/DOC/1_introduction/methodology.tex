@@ -1,0 +1,23 @@
+\section{Methodology}
+\label{sec:methodology}
+%Để tìm ra lí do xảy ra những bất đồng, đầu tiên, chúng tôi phải chỉ ra những điểm bất đồng giữa các saliency maps được sinh ra. Để đánh giá mức độ bất đồng, chúng tôi dùng những độ đo ??? để so sánh phân bố các điểm nổi bật trên hai saliency maps với nhau.
+
+In order to investigate the disagreement among saliency maps, we follow the current methodology utilized in existing literature. Initially, we train two distinct CNN models to serve as our designated target black boxes. Next, we opt for \numExperimentedMethods\ various saliency techniques and assess them over the aforementioned black boxes in order to obtain explanations. Subsequently, we measure the level of disagreement between the saliency methods for each black box by utilizing several metrics such as SSIM, feature agreement, sign agreement, and rank correlation.
+
+Our analysis findings suggest that there is a substantial level of inconsistency among the explanation methods. We have also confirmed that this phenomenon persists across different types of black boxes, although there are intricate and diverse patterns of disagreement. We have concluded that the degree of disagreement is influenced not only by the type of explanation methods but also by the specific type of black box being explained. Additionally, we have noted a limitation in the sign agreement metric, which is approximately half of the feature agreement score. This may make it superfluous in measuring disagreement, and we therefore encourage researchers to develop advanced metrics that can capture a broader range of aspects of inconsistency.
+
+Overall, the contributions of our thesis include:
+\begin{itemize}
+    \item Quantifying the degree of disagreement for \numExperimentedMethods\ saliency methods over two black boxes
+    \item Highlighting the existence of disagreement for saliency maps methods
+    \item Highlighting the variation of disagreement with respect to different kinds of black boxes
+    \item Identifying limitation in sign agreement metric
+\end{itemize}
+
+% To uncover the reasons behind these differencies, we first need to identify the points of difference among the generated saliency maps. To assess the level of difference, we employ measurement metrics including SSIM, feature agreement, sign agreement and rank correlation to compare the distribution of salient points between two saliency maps.
+%Bằng cách so sánh từng cặp saliency maps trên tập dữ liệu test, ta có thể chỉ ra độ bất đồng giữa hai phương pháp giải thích khác nhau. Để thực nghiệm, chúng tôi sẽ chọn từ hai đến ba phương pháp theo từng loại phương pháp/thuật toán (phân loại theo hướng mà các phương pháp/thuật toán đó đang sử dụng để giải thích \cite{attributionbased}).
+% By comparing each pair of saliency maps on the test dataset, we can determine the degree of difference between different explanation methods. 
+
+%Độ bất đồng giữa các phương pháp với nhau trên từng độ đo sẽ được trực quan bằng bản đồ nhiệt. Từ đó, có thể rút trích được những hiểu biết (insights) như những huớng giải thích nào sẽ xuất hiện bất đồng với nhau, những độ đo nào làm nổi bật sự bất đồng hơn, ...
+%Sau khi chỉ ra được điểm bất đồng, chúng tôi sẽ tìm lí do xảy ra vấn đề bằng cách phân tích sâu hơn về những yếu tố có thể gây bất đồng giữa các kết quả giải thích. Các yếu tố có thể kể đến như là: cách các thuật toán hoạt động, ý nghĩa của các saliency map được sinh ra bởi từng loại thuật toán. 
+

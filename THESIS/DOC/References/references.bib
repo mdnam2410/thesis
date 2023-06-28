@@ -1,0 +1,584 @@
+%%
+%% WinShell 3.3.2.6
+%% http://www.winshell.org/
+%%
+
+% Strings
+
+
+% Preamble
+
+
+% BibTeX Entries
+@article{krishna_disagreement_problem,
+  author    = {Satyapriya Krishna and
+               Tessa Han and
+               Alex Gu and
+               Javin Pombra and
+               Shahin Jabbari and
+               Steven Wu and
+               Himabindu Lakkaraju},
+  title     = {The Disagreement Problem in Explainable Machine Learning: {A} Practitioner's
+               Perspective},
+  journal   = {CoRR},
+  volume    = {abs/2202.01602},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2202.01602},
+  eprinttype = {arXiv},
+  eprint    = {2202.01602},
+  timestamp = {Tue, 28 Jun 2022 11:03:37 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-2202-01602.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{cam_zhou,
+  author    = {Bolei Zhou and
+               Aditya Khosla and
+               {\`{A}}gata Lapedriza and
+               Aude Oliva and
+               Antonio Torralba},
+  title     = {Learning Deep Features for Discriminative Localization},
+  journal   = {CoRR},
+  volume    = {abs/1512.04150},
+  year      = {2015},
+  url       = {http://arxiv.org/abs/1512.04150},
+  eprinttype = {arXiv},
+  eprint    = {1512.04150},
+  timestamp = {Mon, 13 Aug 2018 16:47:46 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/ZhouKLOT15.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{grad_cam,
+  author    = {Ramprasaath R. Selvaraju and
+               Abhishek Das and
+               Ramakrishna Vedantam and
+               Michael Cogswell and
+               Devi Parikh and
+               Dhruv Batra},
+  title     = {Grad-CAM: Why did you say that? Visual Explanations from Deep Networks
+               via Gradient-based Localization},
+  journal   = {CoRR},
+  volume    = {abs/1610.02391},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1610.02391},
+  eprinttype = {arXiv},
+  eprint    = {1610.02391},
+  timestamp = {Mon, 13 Aug 2018 16:46:58 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/SelvarajuDVCPB16.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@article{lrp,
+  author    = {Alexander Binder and
+               Gr{\'{e}}goire Montavon and
+               Sebastian Bach and
+               Klaus{-}Robert M{\"{u}}ller and
+               Wojciech Samek},
+  title     = {Layer-wise Relevance Propagation for Neural Networks with Local Renormalization
+               Layers},
+  journal   = {CoRR},
+  volume    = {abs/1604.00825},
+  year      = {2016},
+  url       = {http://arxiv.org/abs/1604.00825},
+  eprinttype = {arXiv},
+  eprint    = {1604.00825},
+  timestamp = {Mon, 13 Aug 2018 16:47:10 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/BinderMBMS16.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{dtd,
+title = {Explaining nonlinear classification decisions with deep Taylor decomposition},
+journal = {Pattern Recognition},
+volume = {65},
+pages = {211-222},
+year = {2017},
+issn = {0031-3203},
+doi = {https://doi.org/10.1016/j.patcog.2016.11.008},
+url = {https://www.sciencedirect.com/science/article/pii/S0031320316303582},
+author = {Grégoire Montavon and Sebastian Lapuschkin and Alexander Binder and Wojciech Samek and Klaus-Robert Müller},
+keywords = {Deep neural networks, Heatmapping, Taylor decomposition, Relevance propagation, Image recognition},
+abstract = {Nonlinear methods such as Deep Neural Networks (DNNs) are the gold standard for various challenging machine learning problems such as image recognition. Although these methods perform impressively well, they have a significant disadvantage, the lack of transparency, limiting the interpretability of the solution and thus the scope of application in practice. Especially DNNs act as black boxes due to their multilayer nonlinear structure. In this paper we introduce a novel methodology for interpreting generic multilayer neural networks by decomposing the network classification decision into contributions of its input elements. Although our focus is on image classification, the method is applicable to a broad set of input data, learning tasks and network architectures. Our method called deep Taylor decomposition efficiently utilizes the structure of the network by backpropagating the explanations from the output to the input layer. We evaluate the proposed method empirically on the MNIST and ILSVRC data sets.}
+}
+
+@article{trustworthiness,
+author = {Arun, Nishanth and Gaw, Nathan and Singh, Praveer and Chang, Ken and Aggarwal, Mehak and Chen, Bryan and Hoebel, Katharina and Gupta, Sharut and Patel, Jay and Gidwani, Mishka and Adebayo, Julius and Li, Matthew                         D. and Kalpathy-Cramer, Jayashree},
+title = {Assessing the Trustworthiness of Saliency Maps for Localizing                     Abnormalities in Medical Imaging},
+journal = {Radiology: Artificial Intelligence},
+volume = {3},
+number = {6},
+pages = {e200267},
+year = {2021},
+doi = {10.1148/ryai.2021200267},
+URL = { 
+    https://doi.org/10.1148/ryai.2021200267
+},
+eprint = { 
+    https://doi.org/10.1148/ryai.2021200267
+}
+,
+    abstract = { Purpose To evaluate the trustworthiness of saliency maps for abnormality localization in medical imaging. Materials and Methods Using two large publicly available radiology datasets (Society for Imaging Informatics in Medicine–American College of Radiology Pneumothorax Segmentation dataset and Radiological Society of North America Pneumonia Detection Challenge dataset), the performance of eight commonly used saliency map techniques were quantified in regard to (a) localization utility (segmentation and detection), (b) sensitivity to model weight randomization, (c) repeatability, and (d) reproducibility. Their performances versus baseline methods and localization network architectures were compared, using area under the precision-recall curve (AUPRC) and structural similarity index measure (SSIM) as metrics. Results All eight saliency map techniques failed at least one of the criteria and were inferior in performance compared with localization networks. For pneumothorax segmentation, the AUPRC ranged from 0.024 to 0.224, while a U-Net achieved a significantly superior AUPRC of 0.404 (P < .005). For pneumonia detection, the AUPRC ranged from 0.160 to 0.519, while a RetinaNet achieved a significantly superior AUPRC of 0.596 (P <.005). Five and two saliency methods (of eight) failed the model randomization test on the segmentation and detection datasets, respectively, suggesting that these methods are not sensitive to changes in model parameters. The repeatability and reproducibility of the majority of the saliency methods were worse than localization networks for both the segmentation and detection datasets. Conclusion The use of saliency maps in the high-risk domain of medical imaging warrants additional scrutiny and recommend that detection or segmentation models be used if localization is the desired output of the network. Keywords: Technology Assessment, Technical Aspects, Feature Detection, Convolutional Neural Network (CNN) Supplemental material is available for this article. © RSNA, 2021 }
+}
+
+
+@article{assistGrading,
+title	= {Using a deep learning algorithm and integrated gradient explanation to assist grading for diabetic retinopathy},
+author	= {Ankur Taly and Anthony Joseph and Arjun Sood and Arun Narayanaswamy and Dale Webster and David Devoud Coz and Derek Wu and Ehsan Rahimy and Greg Corrado and Jesse Smith and Jonathan Krause and Katy Blumer and Lily Peng and Michael Shumski and Naama Hammel and Rory Abbott Sayres and Scott Barb and Zahra Rastegar},
+year	= {2019},
+journal	= {Ophthalmology}
+}
+
+@misc{attributionbased,
+      title={Attribution-based XAI Methods in Computer Vision: A Review}, 
+      author={Kumar Abhishek and Deeksha Kamath},
+      year={2022},
+      eprint={2211.14736},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+@inbook{gradientBased,
+author = {Ancona, Marco and Ceolini, Enea and Öztireli, Cengiz and Gross, Markus},
+year = {2019},
+month = {09},
+pages = {169-191},
+title = {Gradient-Based Attribution Methods},
+isbn = {978-3-030-28953-9},
+doi = {10.1007/978-3-030-28954-6_9}
+}
+
+@conference {adversarialAttacks,
+	title = {Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods},
+	booktitle = {AAAI/ACM Conference on Artificial Intelligence, Ethics, and Society (AIES)},
+	year = {2020},
+	url = {https://arxiv.org/pdf/1911.02508.pdf},
+	author = {Dylan Slack and Sophie Hilgard and Emily Jia and Sameer Singh and Himabindu Lakkaraju}
+}
+
+
+@Article{explainableCovidModel,
+AUTHOR = {Chetoui, Mohamed and Akhloufi, Moulay A. and Yousefi, Bardia and Bouattane, El Mostafa},
+TITLE = {Explainable COVID-19 Detection on Chest X-rays Using an End-to-End Deep Convolutional Neural Network Architecture},
+JOURNAL = {Big Data and Cognitive Computing},
+VOLUME = {5},
+YEAR = {2021},
+NUMBER = {4},
+ARTICLE-NUMBER = {73},
+URL = {https://www.mdpi.com/2504-2289/5/4/73},
+ISSN = {2504-2289},
+ABSTRACT = {The coronavirus pandemic is spreading around the world. Medical imaging modalities such as radiography play an important role in the fight against COVID-19. Deep learning (DL) techniques have been able to improve medical imaging tools and help radiologists to make clinical decisions for the diagnosis, monitoring and prognosis of different diseases. Computer-Aided Diagnostic (CAD) systems can improve work efficiency by precisely delineating infections in chest X-ray (CXR) images, thus facilitating subsequent quantification. CAD can also help automate the scanning process and reshape the workflow with minimal patient contact, providing the best protection for imaging technicians. The objective of this study is to develop a deep learning algorithm to detect COVID-19, pneumonia and normal cases on CXR images. We propose two classifications problems, (i) a binary classification to classify COVID-19 and normal cases and (ii) a multiclass classification for COVID-19, pneumonia and normal. Nine datasets and more than 3200 COVID-19 CXR images are used to assess the efficiency of the proposed technique. The model is trained on a subset of the National Institute of Health (NIH) dataset using swish activation, thus improving the training accuracy to detect COVID-19 and other pneumonia. The models are tested on eight merged datasets and on individual test sets in order to confirm the degree of generalization of the proposed algorithms. An explainability algorithm is also developed to visually show the location of the lung-infected areas detected by the model. Moreover, we provide a detailed analysis of the misclassified images. The obtained results achieve high performances with an Area Under Curve (AUC) of 0.97 for multi-class classification (COVID-19 vs. other pneumonia vs. normal) and 0.98 for the binary model (COVID-19 vs. normal). The average sensitivity and specificity are 0.97 and 0.98, respectively. The sensitivity of the COVID-19 class achieves 0.99. The results outperformed the comparable state-of-the-art models for the detection of COVID-19 on CXR images. The explainability model shows that our model is able to efficiently identify the signs of COVID-19.},
+DOI = {10.3390/bdcc5040073}
+}
+
+@article{saliencyMaps,
+  title={Deep Inside Convolutional Networks: Visualising Image Classification Models and Saliency Maps},
+  author={Karen Simonyan and Andrea Vedaldi and Andrew Zisserman},
+  journal={CoRR},
+  year={2013},
+  volume={abs/1312.6034}
+}
+
+@inproceedings{fulfillRequirements,
+  title={Evaluating explainable AI on a multi-modal medical imaging task: can existing algorithms fulfill clinical requirements?},
+  author={Jin, Weina and Li, Xiaoxiao and Hamarneh, Ghassan},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={36},
+  number={11},
+  pages={11945--11953},
+  year={2022}
+}
+
+@misc{xaiInMedicalSurvey,
+      title={Explainable Deep Learning Methods in Medical Imaging Diagnosis: A Survey}, 
+      author={Cristiano Patrício and João C. Neves and Luís F. Teixeira},
+      year={2022},
+      eprint={2205.04766},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV}
+}
+
+@misc{stopUsingXAI,
+      title={Stop Explaining Black Box Machine Learning Models for High Stakes Decisions and Use Interpretable Models Instead}, 
+      author={Cynthia Rudin},
+      year={2019},
+      eprint={1811.10154},
+      archivePrefix={arXiv},
+      primaryClass={stat.ML}
+}
+
+@article{xaiNotProvided,
+  title={Explainable AI does not provide the explanations end-users are asking for},
+  author={Savio Rozario and George Cevora},
+  journal={ArXiv},
+  year={2023},
+  volume={abs/2302.11577}
+}
+
+@article{proneToDisagreement,
+author = {Neely, Michael and Schouten, Stefan and Bleeker, Maurits and Lucic, Ana},
+year = {2021},
+month = {05},
+pages = {},
+title = {Order in the Court: Explainable AI Methods Prone to Disagreement}
+}
+
+@misc{IG,
+      title={Axiomatic Attribution for Deep Networks}, 
+      author={Mukund Sundararajan and Ankur Taly and Qiqi Yan},
+      year={2017},
+      eprint={1703.01365},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
+
+@article{deconv,
+  author       = {Matthew D. Zeiler and
+                  Rob Fergus},
+  title        = {Visualizing and Understanding Convolutional Networks},
+  journal      = {CoRR},
+  volume       = {abs/1311.2901},
+  year         = {2013},
+  url          = {http://arxiv.org/abs/1311.2901},
+  eprinttype    = {arXiv},
+  eprint       = {1311.2901},
+  timestamp    = {Mon, 13 Aug 2018 16:48:37 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/ZeilerF13.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@misc{guidedbackprop,
+      title={Striving for Simplicity: The All Convolutional Net}, 
+      author={Jost Tobias Springenberg and Alexey Dosovitskiy and Thomas Brox and Martin Riedmiller},
+      year={2015},
+      eprint={1412.6806},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
+
+@misc{lime,
+      title={"Why Should I Trust You?": Explaining the Predictions of Any Classifier}, 
+      author={Marco Tulio Ribeiro and Sameer Singh and Carlos Guestrin},
+      year={2016},
+      eprint={1602.04938},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
+@misc{pneumothorax,
+    author = {Anna Zawacki and Carol Wu and George Shih and Julia Elliott, Mikhail Fomitchev and Mohannad Hussain and ParasLakhani and Phil Culliton and Shunxing Bao},
+    title = {SIIM-ACR Pneumothorax Segmentation},
+    publisher = {Kaggle},
+    year = {2019},
+    url = {https://kaggle.com/competitions/siim-acr-pneumothorax-segmentation}
+}
+
+@article{covidXray,
+	doi = {10.1007/s10044-021-00984-y},
+	url = {https://doi.org/10.1007\%2Fs10044-021-00984-y},
+	year = 2021,
+	month = may,
+	publisher = {Springer Science and Business Media {LLC}},
+	volume = {24},
+	number = {3},
+	pages = {1207--1220},
+	author = {Ali Narin and Ceren Kaya and Ziynet Pamuk},
+	title = {Automatic detection of coronavirus disease ({COVID}-19) using X-ray images and deep convolutional neural networks},
+	journal = {Pattern Analysis and Applications}
+}
+
+@article{inceptionV1,
+  author       = {Christian Szegedy and
+                  Wei Liu and
+                  Yangqing Jia and
+                  Pierre Sermanet and
+                  Scott E. Reed and
+                  Dragomir Anguelov and
+                  Dumitru Erhan and
+                  Vincent Vanhoucke and
+                  Andrew Rabinovich},
+  title        = {Going Deeper with Convolutions},
+  journal      = {CoRR},
+  volume       = {abs/1409.4842},
+  year         = {2014},
+  url          = {http://arxiv.org/abs/1409.4842},
+  eprinttype    = {arXiv},
+  eprint       = {1409.4842},
+  timestamp    = {Mon, 13 Aug 2018 16:48:52 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/SzegedyLJSRAEVR14.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org},
+}
+
+@misc{disagreementCounterfactual,
+      title={Disagreement amongst counterfactual explanations: How transparency can be deceptive}, 
+      author={Dieter Brughmans and Lissa Melis and David Martens},
+      year={2023},
+      eprint={2304.12667},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}
+
+@INPROCEEDINGS{whyDontXAITechniquesAgree,
+
+  author={Roy, Saumendu and Laberge, Gabriel and Roy, Banani and Khomh, Foutse and Nikanjam, Amin and Mondal, Saikat},
+
+  booktitle={2022 IEEE International Conference on Software Maintenance and Evolution (ICSME)}, 
+  title={Why Don’t XAI Techniques Agree? Characterizing the Disagreements Between Post-hoc Explanations of Defect Predictions}, 
+  year={2022},
+
+  volume={},
+
+  number={},
+
+  pages={444-448},
+
+  doi={10.1109/ICSME55016.2022.00056}
+}
+
+@inproceedings{evaluatingSaliencyMaps,
+author = {Alqaraawi, Ahmed and Schuessler, Martin and Wei\ss{}, Philipp and Costanza, Enrico and Berthouze, Nadia},
+title = {Evaluating Saliency Map Explanations for Convolutional Neural Networks: A User Study},
+year = {2020},
+isbn = {9781450371186},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3377325.3377519},
+doi = {10.1145/3377325.3377519},
+abstract = {Convolutional neural networks (CNNs) offer great machine learning performance over a range of applications, but their operation is hard to interpret, even for experts. Various explanation algorithms have been proposed to address this issue, yet limited research effort has been reported concerning their user evaluation. In this paper, we report on an online between-group user study designed to evaluate the performance of "saliency maps" - a popular explanation algorithm for image classification applications of CNNs. Our results indicate that saliency maps produced by the LRP algorithm helped participants to learn about some specific image features the system is sensitive to. However, the maps seem to provide very limited help for participants to anticipate the network's output for new images. Drawing on our findings, we highlight implications for design and further research on explainable AL In particular, we argue the HCI and AI communities should look beyond instance-level explanations.},
+booktitle = {Proceedings of the 25th International Conference on Intelligent User Interfaces},
+pages = {275–285},
+numpages = {11},
+keywords = {human-AI interaction, user studies, explainable AI, heatmap, saliency-maps},
+location = {Cagliari, Italy},
+series = {IUI '20}
+}
+
+@misc{sanityCheck,
+      title={Sanity Checks for Saliency Maps}, 
+      author={Julius Adebayo and Justin Gilmer and Michael Muelly and Ian Goodfellow and Moritz Hardt and Been Kim},
+      year={2020},
+      eprint={1810.03292},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+@inproceedings{interpretationOfNeuralNetworksIsFragile,
+  title={Interpretation of neural networks is fragile},
+  author={Ghorbani, Amirata and Abid, Abubakar and Zou, James},
+  booktitle={Proceedings of the AAAI conference on artificial intelligence},
+  volume={33},
+  number={01},
+  pages={3681--3688},
+  year={2019}
+}
+
+
+@article{startOfXAI,
+  author       = {Zachary Chase Lipton},
+  title        = {The Mythos of Model Interpretability},
+  journal      = {CoRR},
+  volume       = {abs/1606.03490},
+  year         = {2016},
+  url          = {http://arxiv.org/abs/1606.03490},
+  eprinttype    = {arXiv},
+  eprint       = {1606.03490},
+  timestamp    = {Mon, 13 Aug 2018 16:48:59 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/Lipton16a.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{analysisOfXAI,
+  title={A Bibliometric Analysis of the Explainable Artificial Intelligence Research Field},
+  author={Jos{\'e} Maria Alonso and Ciro Castiello and Corrado Mencar},
+  booktitle={International Conference on Information Processing and Management of Uncertainty},
+  year={2018}
+}
+
+
+@article{explanation,
+    title = "Explanation Capabilities of Production-Based Consultation Systems",
+    author = "Scott, A. Carlisle  and
+      Clancey, William J.  and
+      Davis, Randall  and
+      Shortliffe, Edward H.",
+    journal = "American Journal of Computational Linguistics",
+    month = feb,
+    year = "1977",
+    note = "Microfiche 62",
+    url = "https://aclanthology.org/J77-1006",
+    pages = "1--50",
+}
+
+@inproceedings{explainingPrograms,
+author = {Swartout, William R.},
+title = {Explaining and Justifying Expert Consulting Programs},
+year = {1981},
+publisher = {Morgan Kaufmann Publishers Inc.},
+address = {San Francisco, CA, USA},
+abstract = {Traditional methods for explaining programs provide explanations by converting to English the code of the program or traces of the execution of that code While such methods can provide adequate explanations of what the program does or did, they typically cannot provide justifications of the code without resorting to canned-text explanations. That is, such systems cannot tell why what the system is doing is a reasonable thing to be doing. The problem is that the knowledge required to provide these justifications is needed only when the program is being written and does not appear in the code itself.The XPLAIN system uses an automatic programmer to generate the consulting program by refinement from abstract goals. The automatic programmer uses a domain model, consisting of facts about the application domain, and a set of domain principles which drive the refinement process forward. By examining the refinement structure created by the automatic programmer it is possible to provide justifications of the code. This paper discusses the system described above and outlines additional advantages this approach has for explanation.},
+booktitle = {Proceedings of the 7th International Joint Conference on Artificial Intelligence - Volume 2},
+pages = {815–823},
+numpages = {9},
+location = {Vancouver, BC, Canada},
+series = {IJCAI'81}
+}
+
+@misc{taxonomy,
+      title={One Explanation Does Not Fit All: A Toolkit and Taxonomy of AI Explainability Techniques}, 
+      author={Vijay Arya and Rachel K. E. Bellamy and Pin-Yu Chen and Amit Dhurandhar and Michael Hind and Samuel C. Hoffman and Stephanie Houde and Q. Vera Liao and Ronny Luss and Aleksandra Mojsilović and Sami Mourad and Pablo Pedemonte and Ramya Raghavendra and John Richards and Prasanna Sattigeri and Karthikeyan Shanmugam and Moninder Singh and Kush R. Varshney and Dennis Wei and Yunfeng Zhang},
+      year={2019},
+      eprint={1909.03012},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}
+
+@article{medicalXAI,
+author = {Singh, Amitojdeep and Sengupta, Sourya and Lakshminarayanan, Vasudevan},
+year = {2020},
+month = {06},
+pages = {52},
+title = {Explainable Deep Learning Models in Medical Image Analysis},
+volume = {6},
+journal = {Journal of Imaging},
+doi = {10.3390/jimaging6060052}
+}
+
+
+
+@article{shap,
+  author       = {Scott M. Lundberg and
+                  Su{-}In Lee},
+  title        = {A unified approach to interpreting model predictions},
+  journal      = {CoRR},
+  volume       = {abs/1705.07874},
+  year         = {2017},
+  url          = {http://arxiv.org/abs/1705.07874},
+  eprinttype    = {arXiv},
+  eprint       = {1705.07874},
+  timestamp    = {Fri, 26 Nov 2021 16:33:36 +0100},
+  biburl       = {https://dblp.org/rec/journals/corr/LundbergL17.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+
+@article{inceptionv3,
+  author       = {Christian Szegedy and
+                  Vincent Vanhoucke and
+                  Sergey Ioffe and
+                  Jonathon Shlens and
+                  Zbigniew Wojna},
+  title        = {Rethinking the Inception Architecture for Computer Vision},
+  journal      = {CoRR},
+  volume       = {abs/1512.00567},
+  year         = {2015},
+  url          = {http://arxiv.org/abs/1512.00567},
+  eprinttype    = {arXiv},
+  eprint       = {1512.00567},
+  timestamp    = {Mon, 13 Aug 2018 16:49:07 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/SzegedyVISW15.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@misc{resnet101,
+      title={Deep Residual Learning for Image Recognition}, 
+      author={Kaiming He and Xiangyu Zhang and Shaoqing Ren and Jian Sun},
+      year={2015},
+      eprint={1512.03385},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
+
+@article{resnet101Diagram,
+author = {Tong, Yan and Lu, Wei and Deng, Qin-qin and Chen, Changzheng and Shen, Yin},
+year = {2020},
+month = {08},
+pages = {40},
+title = {Automated identification of retinopathy of prematurity by image-based deep learning},
+volume = {7},
+journal = {Eye and Vision},
+doi = {10.1186/s40662-020-00206-2}
+}
+
+@article{imageNet,
+Author = {Olga Russakovsky and Jia Deng and Hao Su and Jonathan Krause and Sanjeev Satheesh and Sean Ma and Zhiheng Huang and Andrej Karpathy and Aditya Khosla and Michael Bernstein and Alexander C. Berg and Li Fei-Fei},
+Title = {{ImageNet Large Scale Visual Recognition Challenge}},
+Year = {2015},
+journal   = {International Journal of Computer Vision (IJCV)},
+doi = {10.1007/s11263-015-0816-y},
+volume={115},
+number={3},
+pages={211-252}
+}
+
+@Inbook{unreliabilityOfSaliencyMethods,
+author="Kindermans, Pieter-Jan
+and Hooker, Sara
+and Adebayo, Julius
+and Alber, Maximilian
+and Sch{\"u}tt, Kristof T.
+and D{\"a}hne, Sven
+and Erhan, Dumitru
+and Kim, Been",
+editor="Samek, Wojciech
+and Montavon, Gr{\'e}goire
+and Vedaldi, Andrea
+and Hansen, Lars Kai
+and M{\"u}ller, Klaus-Robert",
+title="The (Un)reliability of Saliency Methods",
+bookTitle="Explainable AI: Interpreting, Explaining and Visualizing Deep Learning",
+year="2019",
+publisher="Springer International Publishing",
+address="Cham",
+pages="267--280",
+abstract="Saliency methods aim to explain the predictions of deep neural networks. These methods lack reliability when the explanation is sensitive to factors that do not contribute to the model prediction. We use a simple and common pre-processing step which can be compensated for easily---adding a constant shift to the input data---to show that a transformation with no effect on how the model makes the decision can cause numerous methods to attribute incorrectly. In order to guarantee reliability, we believe that the explanation should not change when we can guarantee that two networks process the images in identical manners. We show, through several examples, that saliency methods that do not satisfy this requirement result in misleading attribution. The approach can be seen as a type of unit test; we construct a narrow ground truth to measure one stated desirable property. As such, we hope the community will embrace the development of additional tests.",
+isbn="978-3-030-28954-6",
+doi="10.1007/978-3-030-28954-6_14",
+url="https://doi.org/10.1007/978-3-030-28954-6_14"
+}
+
+
+
+@article{deeplift,
+  author       = {Avanti Shrikumar and
+                  Peyton Greenside and
+                  Anshul Kundaje},
+  title        = {Learning Important Features Through Propagating Activation Differences},
+  journal      = {CoRR},
+  volume       = {abs/1704.02685},
+  year         = {2017},
+  url          = {http://arxiv.org/abs/1704.02685},
+  eprinttype    = {arXiv},
+  eprint       = {1704.02685},
+  timestamp    = {Thu, 14 Oct 2021 09:14:21 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/ShrikumarGK17.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+@article{xaiInMedicalImaging,
+title = {Explainable AI in medical imaging: An overview for clinical practitioners – Saliency-based XAI approaches},
+journal = {European Journal of Radiology},
+volume = {162},
+pages = {110787},
+year = {2023},
+issn = {0720-048X},
+doi = {https://doi.org/10.1016/j.ejrad.2023.110787},
+url = {https://www.sciencedirect.com/science/article/pii/S0720048X23001018},
+author = {Katarzyna Borys and Yasmin Alyssa Schmitt and Meike Nauta and Christin Seifert and Nicole Krämer and Christoph M. Friedrich and Felix Nensa},
+keywords = {Explainable AI, Medical imaging, Radiology, Black-Box, Explainability, Interpretability},
+abstract = {Since recent achievements of Artificial Intelligence (AI) have proven significant success and promising results throughout many fields of application during the last decade, AI has also become an essential part of medical research. The improving data availability, coupled with advances in high-performance computing and innovative algorithms, has increased AI's potential in various aspects. Because AI rapidly reshapes research and promotes the development of personalized clinical care, alongside its implementation arises an urgent need for a deep understanding of its inner workings, especially in high-stake domains. However, such systems can be highly complex and opaque, limiting the possibility of an immediate understanding of the system’s decisions. Regarding the medical field, a high impact is attributed to these decisions as physicians and patients can only fully trust AI systems when reasonably communicating the origin of their results, simultaneously enabling the identification of errors and biases. Explainable AI (XAI), becoming an increasingly important field of research in recent years, promotes the formulation of explainability methods and provides a rationale allowing users to comprehend the results generated by AI systems. In this paper, we investigate the application of XAI in medical imaging, addressing a broad audience, especially healthcare professionals. The content focuses on definitions and taxonomies, standard methods and approaches, advantages, limitations, and examples representing the current state of research regarding XAI in medical imaging. This paper focuses on saliency-based XAI methods, where the explanation can be provided directly on the input data (image) and which naturally are of special importance in medical imaging.}
+}
+
+@inproceedings{testingAttributionMethodsRobustness,
+  title={Testing the robustness of attribution methods for convolutional neural networks in MRI-based Alzheimer’s disease classification},
+  author={Eitel, Fabian and Ritter, Kerstin and Alzheimer’s Disease Neuroimaging Initiative (ADNI)},
+  booktitle={Interpretability of Machine Intelligence in Medical Image Computing and Multimodal Learning for Clinical Decision Support: Second International Workshop, iMIMIC 2019, and 9th International Workshop, ML-CDS 2019, Held in Conjunction with MICCAI 2019, Shenzhen, China, October 17, 2019, Proceedings 9},
+  pages={3--11},
+  year={2019},
+  organization={Springer}
+}

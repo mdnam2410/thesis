@@ -1,0 +1,194 @@
+\subsection{Gradient-based methods}
+\label{subsec: gradientMethods}
+%Dựa trên giả định rằng ta có khả năng biết được các tham số của các mô hình dự đoán, các phương pháp dựa trên đạo hàm trước tiên suy luận nhãn lớp bằng quá trình forward pass và sau đó sử dụng nhãn đã dự đoán để truyền ngược qua từng lớp trong mô hình dự đoán theo thứ tự đến tầng đầu vào để ước tính các đóng góp của đầu vào trong quá trình back propagation. Các phương pháp này dựa trên đạo hàm tạo ra saliency map cho thấy đóng góp của mỗi biến số trong không gian đầu vào đến dự đoán cuối cùng của mạng \cite{gradientBased}. Một lợi thế nữa của các phương pháp gradient-based là một (hoặc một vài) lần forward pass và back propagation giúp ta đánh giá được độ đóng góp của tất cả các đặc trưng trong đầu vào (global contribution).
+
+Based on the assumption that we know the parameters in the black box model, gradient-based methods first produce predictions through a forward pass and then utilize the predicted labels to propagate backward through each layer of the model, in sequential order, all the way to the input layer, estimating the contributions of the inputs during the backpropagation process. These methods, relying on derivatives, generate saliency maps that illustrate the contributions of each variable in the input space to the final prediction of the black box \cite{gradientBased}. Another advantage of gradient-based methods is that a single (or a few) forward pass and backpropagation allow us to evaluate the contributions of all features in the input (global contribution).
+
+\subsubsection{Vanilla Gradient/Saliency}
+\label{subsubsec: grad}
+Saliency method \cite{saliencyMaps} was one of the initial approaches developed to visualize the input attribution of convolutional networks. As the term ``saliency'' is commonly associated with the overall approach of displaying input attribution known as the Saliency maps, this particular method is also referred to as Vanilla Gradient.
+The concept of the Saliency method originates from class visualization, which involves finding an image $I$ that maximizes the score $S_c$ for a particular class $c$ while incorporating $L2$ regularization. Formally, this can be expressed as follows:
+\begin{equation}
+    \underset{I}{argmax}(S_c (I) - \lambda \norm{I} ^2_2)
+\end{equation}
+
+In the case of deep CNN models, the class score $S_c(I)$ is a highly non-linear function. However, we can approximate the class score $S_c(I)$ with a linear function in the neighbourhood of an image $I_0$ by utilizing the first-order Taylor expansion.
+\begin{equation}
+    S_c(I) \approx w^T I + b,
+\end{equation}
+
+To compute the saliency map $A$, we just arrange the values in $w$ to match the shape of input image $I$ 
+\begin{equation}
+A_{i, j} = \underset{ch}{max}\abs{w_{h(i, j, ch)}}
+\end{equation}
+ where $ch$ is a color channel of the pixel $(i,j)$ and $h(i,j,ch)$ is an index of the $w$ corresponding to the same pixel $(i,j)$ and $w$ is the derivative of $S_c$ with respect to the image I at the image $I_0$
+
+\begin{equation}
+    w = \frac{\partial S_c}{\partial I} \bigg \rvert_{I_0}
+\end{equation}
+
+\subsubsection{Integrated Gradient}
+\label{subsubsec: IG}
+Integrated Gradients (IG) is an approach proposed by Sundararajan et al. \cite{IG} in 2017. This method is based on two axioms to which the authors assert that these principles should be upheld by all attribution methods: Sensitivity and Implementation Invariance. The specific definition of those two axioms is as follows:
+
+\begin{itemize}
+    \item Sensitivity:
+An attribution method satisfies Sensitivity when it meets two conditions:
+The first condition is if we have two inputs and baselines that differ in only one feature, but result in different predictions by the model, then the feature that distinguishes them should be assigned a non-zero attribution. In other words, when a single feature alteration leads to divergent model outputs, the attribution method should correctly identify and highlight the contribution of that differing feature.
+
+The second condition is if the function implemented by the model does not depend (mathematically) on a particular variable or feature, then the attribution assigned to that variable should always be zero. In other words, if a feature has no influence on the model's predictions or decision-making process, it should not be attributed any significance or contribution.
+    
+    \item Implementation Invariance: The attribution values must be the same if two models are equivalent - Two models are considered functionally equivalent if their outputs are the same for all possible inputs, even if they have been implemented using different architectures or methodologies. The goal of Implementation Invariance is to ensure that the attributions produced by an attribution method remain consistent and identical when applied to functionally equivalent networks.
+\end{itemize}
+
+%Kỹ thuật Integrated Gradient tính độ biến thiên kết quả đầu ra của mô hình giữa đầu vào $x$ và tham chiếu $x'$ (trên mô hình với tác vụ hình ảnh, baseline $x'$ có thể là ảnh với tập các pixel giá trị 0 - ảnh đen) bằng cách tính tích phân đường độ biến thiên của đầu ra trên vector $x' \rightarrow x$. Cụ thể, giả sử mô hình của chúng ta được biểu diễn dưới dạng toán học là một hàm số $F: R^n \rightarrow [0, 1]$, công thức tính độ biến thiên đầu ra trên từng biến đầu vào  $\frac{F(x_i)}{x_i}$ như sau: 
+The main idea of this technique is to quantify the change in model output between an input $x$ and a reference baseline $x'$ (in the case of an image task, the baseline $x'$ is often represented as a black image with all pixels set to 0). To compute the output variation, IG calculates the gradient of the model's output with respect to the input variables along the path from $x'$ to $x$. The main idea is to integrate the gradients over this path to obtain a comprehensive measure of the input variable's impact on the model's output.
+
+Let's assume our model is a mathematical function denoted as $F: R^n \rightarrow [0, 1]$, where $n$ represents the number of input variables. The formula used to calculate the output variation attributed to each input variable, $x_i$, is as follows:
+
+\begin{equation} \label{ig_formula}
+IG_i(x_i) = (x_i - x'_i) \times \int_{\alpha = 0}^{1} \frac{\partial F(x'_i + \alpha \times (x_i - x'_i))}{\partial x_i}d\alpha 
+\end{equation}
+By evaluating this integral for each input variable, this technique quantifies the contribution of each variable to the model's output variation between the input and the baseline. This provides valuable insights into the relative importance and influence of different input features on the model's decision-making process.
+
+\subsubsection{Grad-CAM}
+\label{subsubsec:GC}
+%Grad-CAM (Gradient-weighted Class Activation Mapping) \cite{grad_cam} là một phiên bản tổng quát hơn của CAM (class activation mapping) \cite{cam_zhou}. Với phương pháp CAM, kiến trúc của các mô hình cần áp dụng phép toán Global Average Pooling (GAP) ở lớp tích chập (convolutional) cuối cùng và một lớp fully-connected ở cuối để mô hình đưa ra dự đoán. Với kiến trúc này, để giải thích, ta sẽ dùng kết quả có được sau khi thực hiện phép toán GAP trên các feature map activations, đánh trọng số chúng dựa trên trọng số của lớp phân loại cuối cùng để tạo ra class activation map. Cụ thể, gọi $F_k = \sum_{x, y} {f_k(x,y)}$ là kết quả của phép GAP lên feature map activation k tại điểm $(x, y)$, class activation map của phân lớp $c$ - $M_c$ được tính như sau:
+
+Grad-CAM (Gradient-weighted Class Activation Mapping) \cite{grad_cam} is a more general version of CAM (Class Activation Mapping) \cite{cam_zhou}. With CAM, the model architecture requires the use of Global Average Pooling (GAP) operation at the last convolutional layer followed by a fully-connected layer to make predictions. With this architecture, to explain the model's decision, we utilize the results obtained after performing GAP on the feature map activations and weight them based on the weights of the final classification layer to generate a class activation map. Specifically, let $F_k = \sum_{x, y} {f_k(x,y)}$ represent the result of applying GAP to the activation feature map $k$ at the point $(x, y)$. The class activation map for class $c$, denoted as $M_c$, is calculated as follows:
+
+\begin{equation}
+M_c(x, y) = \sum_{k} F_k w_k^c
+\end{equation}
+
+In this equation, $w_k^c$ represents the weight associated with the $k$-th activation feature map for the class $c$. By summing up the weighted feature map activations, the Grad-CAM technique generates a class activation map that attributes the regions of the input image that contribute most significantly to the prediction for the target class.
+
+By visualizing the class activation map, we can identify the spatial locations within the input image that the model focuses on when making predictions. These regions often correspond to the discriminative features relevant to the target class, providing insights into the model's decision-making process.
+
+%Ý tưởng của Grad-CAM vẫn là sử dụng những feature maps có được từ lớp tích chập mà ta chọn  để tính giá trị đóng góp từ đầu vào. Điểm khác biệt là ta đánh trọng số feature maps bằng giá trị $\alpha$ được tính theo gradient. Cụ thể, thuật toán Grad-CAM gồm 3 bước sau:
+Grad-CAM generalizes the CAM approach by eliminating the requirement of the model architecture. It leverages the gradient information flowing into the convolutional layers. This makes Grad-CAM applicable to a wide range of CNN architectures. The idea behind Grad-CAM remains using feature maps obtained from the chosen convolutional layer to calculate the contribution values from the input. The difference lies in weighting the feature maps using the gradient-derived value, denoted as $\alpha$. Specifically, the Grad-CAM algorithm consists of the following three steps:
+
+Step 1: Calculate the variation of the output value for class $c$, denoted as $y_c$, with respect to the activation feature map $A^k$ in the desired convolutional layer that we want to explain.
+
+Step 2: Compute the weight $\alpha$ for the $k$-th activation feature map using the formula:
+\begin{equation}
+\alpha_k^c = \frac{1}{Z} \sum_i \sum_j \frac{\partial y^c}{\partial A^k_{ij}}
+\end{equation}
+%
+Here, $\frac{\partial y^c}{\partial A^k_{ij}}$ represents the partial derivative of the output class $c$ with respect to the activation feature map $A^k_{ij}$ at position $(i, j)$, and $\frac{1}{Z}\sum_i \sum_j$ works as Global Average Pooling
+
+Step 3: After obtaining the weights $\alpha$, we can calculate the Grad-CAM heatmap by summing the weighted feature map activations and applying the ReLU function. Specifically, the Grad-CAM heatmap for class $c$ is computed as follows:
+\begin{equation}
+L^c = \text{ReLU}\left(\sum_k{\alpha_k^c A^k}\right)
+\end{equation}
+%
+The ReLU function is used here to consider only positive contribution values, while negative values are set to 0.
+
+By following these steps, Grad-CAM generates a heatmap that highlights the important regions of the input image for the predicted class. These regions correspond to the areas where the model focuses its attention when making predictions. The higher the intensity in the Grad-CAM heatmap, the more influential the corresponding spatial locations are in determining the prediction for the target class.
+
+\subsubsection{Guided Backpropagation}
+\label{subsubsec:GBP}
+%Guided Backpropagation \cite{guidedbackprop} (GBP) là một phương pháp giải thích dựa trên cơ chế lan truyền ngược (backpropagation). Ý tưởng của GBP được Alexey Dosovitskiy và đồng nghiệp phát triển dựa trên Deconvolution \cite{deconv} và Saliency \cite{saliencyMaps}. Tác giả nhận định rằng phương pháp Saliency \cite{saliencyMaps} của Simonyan có vấn đề nếu có sự tham gia của các gradient giá trị âm, thứ làm giảm độ chính xác của các lớp sâu trong mô hình mà ta đang cố giải thích. Để giải quyết, tác giả đã kết hợp 2 phương pháp lại, thêm chỉ dẫn vào phương pháp Saliency với sự giúp đỡ của Deconvolution
+%Kỹ thuật này kèm theo từ "guided" vì cho phép chúng ta chọn những neuron nào được kích hoạt để thực hiện quá trình backpropagation. Để làm việc đó, phương pháp này chỉnh sửa bước backpropagation thông thường bằng phép tính ReLU để chỉ backpropagation những giá trị gradient dương. Các giá trị gradient âm sẽ được gán bằng 0. Cụ thể, gọi $f^l_i$ là feature map ở layer thứ $l$, kết quả lan truyền ngược ở layer $l$ được tính như sau:
+
+Guided Backpropagation (GBP) \cite{guidedbackprop} is an explanation method based on the backpropagation mechanism. The idea behind GBP was developed by Alexey Dosovitskiy et al. building upon Deconvolution \cite{deconv} and Saliency \cite{saliencyMaps} techniques. The authors argued an issue with the Saliency method proposed by Simonyan \cite{saliencyMaps}, which arises when negative gradient values are involved. These negative gradients could decrease the accuracy of deeper layers in the network being explained. To address this issue, the authors combined the two methods and introduced guidance into the Saliency method with the help of Deconvolution.
+
+The term ``guided'' in this technique implies that we can selectively activate specific neurons to perform the backpropagation process. To achieve this, the method modifies the standard backpropagation step using the ReLU operation, allowing only positive gradients to be backpropagated. Negative gradient values are assigned a value of 0. Specifically, let $f^l_i$ denote the feature map at layer $l$, and the backpropagation result at layer $l$ is computed as follows:
+
+\begin{equation}
+\frac{\partial E}{\partial f^l_i} = \max\left(0, \frac{\partial E}{\partial f^{l+1}_i}\right) \cdot \frac{\partial f^{l+1}_i}{\partial f^l_i}
+\end{equation}
+%
+Here, $\frac{\partial E}{\partial f^l_i}$ represents the backpropagated error with respect to the feature map $f^l_i$ at layer $l$. The ReLU operation ensures that only positive gradients are considered, filtering out negative gradients during the backpropagation process.
+
+Guided Backpropagation is particularly useful when we want to focus on specific neurons or regions of the model during the explanation process. By selectively activating certain neurons and propagating positive gradients, GBP allows us to highlight the influential features and understand the model's decision-making process at a more fine-grained level.
+
+\subsubsection{Guided GradCAM}
+\label{subsubsec: GGCAM}
+%Guided Grad-CAM kế thừa thứ mà Grad-CAM \ref{subsubsec:GC} làm tốt nhất là phân lớp (class-discrimation) và định vị (localization) với khả năng trực quan hoá bằng cách chỉ tính đóng góp ở những nơi gradient dương của phương pháp Guided Backpropagation \ref{subsubsec:GBP}
+Guided GradCAM is an XAI method that combines the principles of Grad-CAM \ref{subsubsec:GC} and Guided Backpropagation to provide more localized and fine-grained explanations of deep neural network predictions. Guided Grad-CAM inherits the strengths of Grad-CAM, which are class discrimination and localization, with the ability to visualize by focusing only on the contributions in regions with positive gradients from the Guided Backpropagation method.
+
+The main idea behind GuidedGradCAM is to generate a heatmap that represents the importance of each pixel or region in the input with respect to the predicted class. This heatmap is obtained by combining the gradient information from both the Grad-CAM and Guided Backpropagation methods. To combine these two methods, GuidedGradCAM utilizes the positive gradients obtained from Guided Backpropagation and multiplies them element-wise with the Grad-CAM weights. This multiplication enhances the relevance of positive features while suppressing the influence of negative features. The resulting guided Grad-CAM heatmap provides a more focused and accurate representation of the important regions in the input.
+Mathematically, let's denote the Grad-CAM weights for class $c$ as $W_c$ and the guided backpropagated gradients as $L_{\text{guided}}$. The GuidedGradCAM heatmap $H_c$ for class $c$ is obtained by element-wise multiplication of these two quantities:
+\begin{equation}
+H_c = \text{ReLU}(W_c \odot L_{\text{guided}})
+\end{equation}
+where $\odot$ represents element-wise multiplication and ReLU ensures that only positive contributions are considered.
+
+\begin{figure}
+\centering
+\includegraphics[width=13cm]{images/xai_methods/guided-grad-cam.png}
+\caption{How Guided Grad-CAM heatmaps generated by combining Grad-CAM \& Guided backpropagation method. Source \cite{grad_cam}}
+\end{figure}
+
+The resulting heatmap $H_c$ highlights the regions in the input that have a strong positive influence on the prediction for class $c$. These regions indicate the areas that the model focuses on when making the prediction and provide insights into the important visual cues or features.
+
+\subsubsection{Layer-wise Relevance Propagation}
+\label{subsubsec:lrp}
+Layer-wise Relevance Propagation (LRP) was introduced by Bach et al. \cite{lrp}. The fundamental idea behind LRP is to assign relevance scores to the input features or neurons based on their impact on the model predictions. LRP achieves this by redistributing the output relevance backward through the layers of the neural network.
+
+LRP adheres to the conservation property, which states that the relevance received by a neuron must be evenly redistributed to the neurons in the lower layer. In simpler terms, whatever relevance a neuron receives, it must pass on an equal amount of relevance to the neurons in the next layer. This conservation property is one of the fundamental principles of LRP, although there are other properties that LRP also follows, this particular property is explicitly emphasized in its implementation. Let's denote $j, k$ are two consecutive layers, $z_{jk}$ quantifies the amount of contribution node $j$ has to make node $k$ relevant, the guiding equation for propagating relevance scores is:
+
+\begin{equation}
+\label{equation:conservation}
+    R_j = \sum_{k}{\frac{z_jk}{\sum_j{z_{jk}}}}R_k
+\end{equation}
+
+\begin{figure}[hbt!]
+\centering
+\includegraphics[width=13cm]{images/xai_methods/lrp.png}
+\caption{Relevance scores propagating procedure. Source \cite{lrp}}
+\end{figure}
+
+This relevance redistribution is guided by certain rules and principles that ensure the preservation of relevance throughout the network. One commonly used rule in LRP is the ``epsilon rule'' which solves the problem of gradient noise by introducing a small positive term, $\epsilon$ to the denominator
+
+The $\epsilon$-rule formula for LRP can be expressed as follows:
+\begin{equation}
+    R_j = \sum_{k}{\frac{z_jk}{\epsilon + \sum_i{z_{jk}}}}R_k
+\end{equation}
+
+An advantage of LRP is the consideration of both positive and negative contributions. This helps in understanding not only the positive factors that drive the model's prediction but also the inhibitory factors that may counteract certain features or neurons.
+
+LRP is a broad family of methods, and different variants and modifications exist to adapt to various network architectures and specific application domains. The choice of propagation rules and modifications may vary depending on the specific requirements and interpretability objectives.
+
+\subsubsection{Deep Label-Specific Feature Learning}
+\label{subsubsec:deeplift}
+While LRP adhered to the conservation axiom, which ensures that the relevance received by a neuron is redistributed equally to the lower layer, there was still a challenge in determining how to allocate the net relevance among individual pixels within a layer. This ambiguity led to difficulties in accurately understanding the contribution of each pixel to the overall relevance. To address this issue, Deep Label-Specific Feature Learning (DeepLIFT) \cite{deeplift} introduces an additional axiom on how to propagate the relevance down. 
+
+DeepLIFT calculates the contributions of individual neurons by comparing their current activation with a reference activation. The reference activations for all neurons are determined by performing a forward pass, where the input parameters are propagated through the neural network. More details are presented in \cite{deeplift}. In simple terms, to explain a neural $x$, let's denote $t$ as its current activations and $t'$ as its reference activation. If the difference between these two values $\delta t = t - t'$, DeepLIFT assigns contribution scores $C_{\delta x_i \delta t}$ to $\delta x_i$ as follows:
+
+\begin{equation}
+\label{equation:deeplift}
+    \sum_{i = 1}^{n} C_{\delta x_i \delta t} = \delta t
+\end{equation}
+
+\subsubsection{Gradient SHapley Additive exPlanation}
+\label{subsubsec:gradshap}
+
+GradientSHAP (Gradient SHapley Additive exPlanation) \cite{shap} combines the gradient-based approach to attribution and  the concepts of Shapley values from cooperative game theory.
+
+In cooperative game theory, Shapley values are used to fairly distribute the contribution among players in a cooperative game. In the context of XAI, Shapley values measure the contribution of each feature to the prediction or output of the model.
+
+To calculate the Shapley value of a feature, we consider all possible permutations of the features and measure their marginal contributions. In each permutation, we determine the difference in the prediction when the feature is included versus when it is not. By averaging these differences across all permutations, we obtain the Shapley value for that feature. Suppose $F$ is the set of all features, S is all feature subsets of $F$. We compute the contribution value of a feature $i$ as in the formula \ref{equation:shap} represented in the work of Scott et al. \cite{shap}.
+
+\begin{equation}
+\label{equation:shap}
+\phi_i = \sum_{S \subset F \cup \{i\}} \frac{\abs{S}!(\abs{F} - \abs{S} - 1)!}{\abs{F}! } ( f_{S \cup \{ i \}} ( x_{ S \cup \{ i \}} ) - f_S (x_S) )
+\end{equation}
+where $f_K$ is a model trained with the set of feature $K$.
+
+With GradientSHAP, the Shapley values are computed using gradients. Gradients provide information about how changes in feature values affect the model's output. By considering the gradients of the model's predictions with respect to the input features, GradientSHAP determines the relative importance of each feature in the prediction process. Here's an overview of how the GradSHAP works:
+ 
+1. Choose a reference dataset: Select a dataset that represents the background or baseline data distribution. This dataset serves as a reference point for calculating SHAP values.
+ 
+2. Compute the expected model output: Calculate the average prediction of the model across the reference dataset. This provides the expected value of the model output, denoted as $E[f(x)]$.
+ 
+3. Calculate the gradients: Determine the gradients of the model output with respect to the input features for a specific instance. Gradients indicate the rate of change of the model output for each feature. $\nabla_x f(x)$.
+ 
+4. Combine the gradients with the expected values: To approximate the SHAP values, we linearize the model output around the expected values using the computed gradients. Therefore, the approximation of the SHAP value for each feature can be calculated as:
+$$\phi_i = \sum_{j=1}^N (x_j - E[x_j]) \cdot \nabla_{x_j} f(x)$$
+where $\phi_i$ is the SHAP value for the $i$-th feature, $N$ is the number of features, $x_j$ is the value of the $j$-th feature for the input instance $x$, and $E[x_j]$ is the expected value of the $j^{th}$ feature calculated from the reference dataset.
+ 
+5. Calculate the SHAP values: The above formula gives an approximation of the SHAP values for each feature. To improve the accuracy, we can use different reference instances for each feature and average the results. This can be done by sampling multiple times from the reference dataset and computing the SHAP values for each sample, then averaging the results. This process is called Monte Carlo sampling.
+
+In summary, the SHAP Gradient Explainer uses the gradients of the model output with respect to input features to approximate SHAP values, which provide a fair distribution of the contribution of each feature towards the prediction for a specific instance.
