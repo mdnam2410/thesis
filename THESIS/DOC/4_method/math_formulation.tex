@@ -11,7 +11,7 @@ Each value $e_{ij}$ represents the importance score that the pixel at $(i, j)$ c
 \subsection{Metrics}
 \label{subsec:metrics}
 \subsubsection{Structural Similarity Index Metric}
-To capture the similarity in structure between two saliency maps, we use the Structural Similarity Index Metric (SSIM). Despite its name, this metric captures more than just structural similarity between two images: it takes into account the contrast, luminance, and the structure of two images.
+To capture the similarity in structure between two saliency maps, we use the Structural Similarity Index Metric (SSIM) \cite{ssim}. Despite its name, this metric captures more than just structural similarity between two images: it takes into account the contrast, luminance, and the structure of two images.
 
 For the sake of simplicity, given two saliency maps $e^{(1)}$ and $e^{(2)}$, let $x = e^{(1)}$, $y = e^{(2)}$. Then, the formula for SSIM between two saliency maps $x$ and $y$ is:
 \begin{equation}
