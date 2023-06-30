@@ -114,7 +114,7 @@ if __name__ == '__main__':
     argParser = argparse.ArgumentParser()
     argParser.add_argument("-e", "--epochs",type=int, default=30, help="Number epochs to train blackbox models")
     argParser.add_argument("-p", "--path",type=str, help="The dataset folder path")
-    argParser.add_argument("-o", "--out",type=str,default='pretrained_weights', help="Output folder path")
+    argParser.add_argument("-o", "--out",type=str,default='SALIENCY_DISAGREEMENT/SOURCE/pretrained_weights', help="Output folder path")
     argParser.add_argument("-b", "--batches",type=int, default=32,help="The training batch size")
 
     args = argParser.parse_args()
