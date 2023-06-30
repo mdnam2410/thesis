@@ -123,7 +123,7 @@ if __name__ == '__main__':
     batch_size = args.batches
     epochs = args.epochs
     output_folder = args.out
-    num_workers = multiprocessing.cpu_count()
+    num_workers = 4
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     seed = 42
 
