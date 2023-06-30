@@ -43,7 +43,7 @@ To train black boxes, run:
 $ ./SALIENCY_DISAGREEMENT/SOURCE/train.sh
 ```
 
-After training the output black box checkpoints will be stored in the directory `pretrained_weights`. These checkpoints are required for step 2. We can skip this step if you are satisfied with the current pretrained models
+After training the output black box checkpoints will be stored in the directory `pretrained_weights`. These checkpoints are required for step 2. We can skip this step if you are satisfied with the current pretrained models.
 
 ## Step 2: Generating explanations
 Launch Jupyter notebook using:
