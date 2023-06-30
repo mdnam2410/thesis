@@ -1,1 +1,1 @@
-python train_blackboxes.py --path pneumothorax-chest-xray-dataset/siim-acr-pneumothorax
+python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/pneumothorax-chest-xray-dataset/siim-acr-pneumothorax
