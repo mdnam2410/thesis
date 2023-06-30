@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 SALIENCY_DISAGREEMENT/SOURCE/pneumothorax-chest-xray-dataset
+SALIENCY_DISAGREEMENT/SOURCE/pretrained_weights
