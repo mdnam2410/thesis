@@ -9,3 +9,4 @@ chmod 600 ~/.kaggle/kaggle.json
 kaggle datasets download -d vbookshelf/pneumothorax-chest-xray-images-and-masks
 pip install -r train_requirements.txt
 unzip -d pneumothorax-chest-xray-dataset pneumothorax-chest-xray-images-and-masks
+pip install -r requirements.txt
