@@ -7,6 +7,6 @@ mkdir  -p ~/.kaggle
 mv kaggle.json ~/.kaggle
 chmod 600 ~/.kaggle/kaggle.json
 kaggle datasets download -d vbookshelf/pneumothorax-chest-xray-images-and-masks
-pip install -r SALIENCY_DISAGREEMENT/SOURCE/train_requirements.txt
-pip install -r SALIENCY_DISAGREEMENT/SOURCE/requirements.txt
+python -m pip install -r SALIENCY_DISAGREEMENT/SOURCE/train_requirements.txt
+python -m pip install -r SALIENCY_DISAGREEMENT/SOURCE/requirements.txt
 unzip -d pneumothorax-chest-xray-dataset SALIENCY_DISAGREEMENT/SOURCE/pneumothorax-chest-xray-dataset/siim-acr-pneumothorax
