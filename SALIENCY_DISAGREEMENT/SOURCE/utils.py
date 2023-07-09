@@ -1,3 +1,5 @@
+# %% [code]
+# %% [code]
 import os
 from torchvision import models, transforms
 
@@ -10,7 +12,7 @@ COLAB_DATASET_PATH = '/content/datasets'
 LOCAL_DATASET_PATH = 'pneumothorax-chest-xray-dataset/'
 
 # Checkpoint
-KAGGLE_CHECKPOINT_PATH = '/kaggle/input/'
+KAGGLE_CHECKPOINT_PATH = '/kaggle/input/xai-pretrained-blackbox'
 COLAB_CHECKPOINT_PATH = '/content/datasets/'
 LOCAL_CHECKPOINT_PATH = 'pretrained_weights/'
 
