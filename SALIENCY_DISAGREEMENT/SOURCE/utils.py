@@ -12,7 +12,7 @@ DS_PNEUMOTHORAX = 'pneumothorax'
 DS_PNEUMONIA = 'pneumonia'
 
 # Dataset
-KAGGLE_DATASET_PATH = '/kaggle/input/pneumothorax-chest-xray-images-and-masks'
+KAGGLE_DATASET_PATH = '/kaggle/input/'
 COLAB_DATASET_PATH = '/content/datasets'
 LOCAL_DATASET_PATH = 'datasets/'
 
@@ -56,7 +56,7 @@ def get_dataset_loader(env, dataset, batch_size):
 
     if dataset == DS_PNEUMOTHORAX:
         dataset_path = os.path.join(
-            dataset_path, 'pneumothorax-chest-xray-dataset/siim-acr-pneumothorax')
+            dataset_path, 'pneumothorax-chest-xray-images-and-masks/siim-acr-pneumothorax')
 
         test_data = pd.read_csv(os.path.join(
             dataset_path, 'stage_1_test_images.csv'))
