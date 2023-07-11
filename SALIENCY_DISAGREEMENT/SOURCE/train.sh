@@ -1,1 +1,4 @@
-python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/pneumothorax-chest-xray-dataset/siim-acr-pneumothorax
+python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/datasets --model resnet101 --dataset pneumothorax-chest-xray
+python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/datasets --model inceptionv3 --dataset pneumothorax-chest-xray
+python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/datasets --model resnet101 --dataset pneumonia-chest-xray
+python SALIENCY_DISAGREEMENT/SOURCE/train_blackboxes.py --path SALIENCY_DISAGREEMENT/SOURCE/datasets --model inceptionv3 --dataset pneumonia-chest-xray

@@ -5,19 +5,32 @@ import random
 import argparse
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from PIL import Image
 from tqdm import tqdm
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 import torch
-from torchvision import models
+from torchvision import datasets, models
 from torch.utils.data import Dataset
 import albumentations
 import albumentations.pytorch
 import multiprocessing
 
-class PneumothoraxImageDataset(Dataset):
+
+blackbox_configs = { 
+    'resnet101': {
+        'input_size': (244, 244), 
+        'model_constructor': models.resnet101,
+        'is_inception': False,
+    }, 
+    'inceptionv3': {
+        'input_size': (299, 299), 
+        'model_constructor': models.inception_v3,
+        'is_inception': True,
+    }
+}
+
+class ChestXrayImageDataset(Dataset):
     def __init__(self, images, targets, augmentation):
         self.augmentation = augmentation
         self.images = images
@@ -33,6 +46,45 @@ class PneumothoraxImageDataset(Dataset):
         if self.augmentation:
             image = self.augmentation(image=image)['image']
         return image, label
+
+def createFolder(folder_path):
+    isExist = os.path.exists(folder_path)
+    if not isExist:
+      os.makedirs(folder_path)
+
+def get_dataset(dataset_name, aug, main_path): 
+    if dataset_name == 'pneumothorax-chest-xray':
+        dataset_path = f"{main_path}/pneumothorax-chest-xray-images-and-masks/siim-acr-pneumothorax"
+        train_data = pd.read_csv(os.path.join(dataset_path, 'stage_1_train_images.csv'))
+        test_data = pd.read_csv(os.path.join(dataset_path, 'stage_1_test_images.csv'))
+
+        train_data['images'] = train_data['new_filename'].apply(lambda x: os.path.join(dataset_path, 'png_images', x))
+        test_data['images'] = test_data['new_filename'].apply(lambda x: os.path.join(dataset_path, 'png_images', x))
+
+        train_images = train_data['images'].tolist()
+        train_targets = train_data['has_pneumo'].tolist()
+        train_images, val_images, train_targets, val_targets = train_test_split(train_images, train_targets, stratify=train_targets, train_size=0.9)
+        train_dataset = ChestXrayImageDataset(train_images, train_targets, augmentation=aug)
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+        val_dataset = ChestXrayImageDataset(val_images, val_targets, augmentation=aug)
+        val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
+        
+        test_dataset = ChestXrayImageDataset(test_data['images'].tolist(), test_data['has_pneumo'].tolist(), augmentation=aug)
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
+        
+        return train_loader, val_loader, test_loader
+    elif dataset_name == 'pneumonia-chest-xray':        
+        dataset_path = f"{main_path}/chest-xray-pneumonia/chest_xray"
+        aug_adaptor = lambda image: aug(image=np.asarray(image))['image']
+        train_dataset = datasets.ImageFolder(os.path.join(dataset_path, 'train'), transform = aug_adaptor)
+        test_dataset = datasets.ImageFolder(os.path.join(dataset_path, 'test'), transform = aug_adaptor)
+        val_dataset = datasets.ImageFolder(os.path.join(dataset_path, 'val'), transform = aug_adaptor)
+
+        train_loader = torch.utils.data.DataLoader(train_dataset,batch_size = batch_size,shuffle = True, num_workers=0)
+        val_loader = torch.utils.data.DataLoader(val_dataset,batch_size = batch_size,shuffle = False, num_workers=0)
+        test_loader = torch.utils.data.DataLoader(test_dataset,batch_size = batch_size,shuffle = False, num_workers=0)
+        return train_loader, val_loader, test_loader
+    return ()
 
 def train_model(model, dataloaders, optimizer, criterion, num_epochs=32, is_inception=False):
     start = time.time()
@@ -54,7 +106,6 @@ def train_model(model, dataloaders, optimizer, criterion, num_epochs=32, is_ince
                 
             running_loss = 0
             running_corrects = 0
-            
             # Iteration over the data
             for inputs, labels in tqdm(dataloaders[phase]):
                 inputs = inputs.to(device)
@@ -106,6 +157,29 @@ def train_model(model, dataloaders, optimizer, criterion, num_epochs=32, is_ince
     return model, val_acc_history
 
 
+def train(model_name, dataset_name, main_path):
+    mean = (0.485, 0.456, 0.406)
+    std = (0.229, 0.224, 0.225)
+    blackbox_config = blackbox_configs[model_name]
+    resize_to = blackbox_config['input_size']
+
+    aug = albumentations.Compose([
+        albumentations.Resize(*resize_to), 
+        albumentations.Normalize(mean, std, max_pixel_value=255, always_apply=True), 
+        albumentations.pytorch.transforms.ToTensor()
+    ])
+    train_loader, val_loader, _ = get_dataset(dataset_name, aug, main_path)
+    model = blackbox_config['model_constructor'](pretrained=True)
+    is_inception = blackbox_config['is_inception']
+    model = model.to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+    criterion = nn.CrossEntropyLoss()
+    dataloaders_dict = { "train": train_loader, "val": val_loader }
+    model, _ = train_model(model, dataloaders_dict, optimizer, criterion, epochs, is_inception)
+
+    output_dir = f'{output_folder}/{dataset_name}'
+    createFolder(output_dir)
+    torch.save(model.state_dict(), f'{output_dir}/{model_name}.pth')
 
 if __name__ == '__main__':  
     multiprocessing.freeze_support()
@@ -116,6 +190,8 @@ if __name__ == '__main__':
     argParser.add_argument("-p", "--path",type=str, help="The dataset folder path")
     argParser.add_argument("-o", "--out",type=str,default='SALIENCY_DISAGREEMENT/SOURCE/pretrained_weights', help="Output folder path")
     argParser.add_argument("-b", "--batches",type=int, default=32,help="The training batch size")
+    argParser.add_argument("-d", "--dataset",type=str, default="pneumonia", help="The name of the dataset used in training phase")
+    argParser.add_argument("-m", "--model",type=str, default="res101", help="The name of the dataset used in training phase")
 
     args = argParser.parse_args()
 
@@ -123,15 +199,15 @@ if __name__ == '__main__':
     batch_size = args.batches
     epochs = args.epochs
     output_folder = args.out
-    num_workers = 4
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     seed = 42
+    model_name = args.model
+    dataset_name = args.dataset
 
     print(device)
     print(f"Training Dataset is retrieve at: {main_path}")
     print(f"Train in {epochs} epochs. {batch_size} images / batch")
     print(f"Output will be stored at: {output_folder}")
-    print(f"Number of workers: ", num_workers)
     print(f'Setting everything to seed {seed}')
 
     random.seed(seed)
@@ -141,56 +217,7 @@ if __name__ == '__main__':
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
 
-    train_data = pd.read_csv(os.path.join(main_path, 'stage_1_train_images.csv'))
-    test_data = pd.read_csv(os.path.join(main_path, 'stage_1_test_images.csv'))
-    train_data['images'] = train_data['new_filename'].apply(lambda x: os.path.join(main_path, 'png_images', x))
-    test_data['images'] = test_data['new_filename'].apply(lambda x: os.path.join(main_path, 'png_images', x))
-    images = train_data['images'].tolist()
-    targets = train_data['has_pneumo'].tolist()
-    print("Train size: ", len(images))
-    plt.imshow(Image.open(images[0]))
-    
-    isExist = os.path.exists(output_folder)
-    if not isExist:
-        os.makedirs(output_folder) 
+    createFolder(output_folder)
+    train(model_name, dataset_name, main_path)
 
-    blackbox_configs = { 
-        'resnet101': {
-            'input_size': (244, 244), 
-            'model_constructor': models.resnet101,
-            'is_inception': False,
-        }, 
-        'inceptionv3': {
-            'input_size': (299, 299), 
-            'model_constructor': models.inception_v3,
-            'is_inception': True,
-        }
-    }
-
-    for model_name, blackbox_config in blackbox_configs.items():
-        mean = (0.485, 0.456, 0.406)
-        std = (0.229, 0.224, 0.225)
-        resize_to = blackbox_config['input_size']
-
-        aug = albumentations.Compose([
-            albumentations.Resize(*resize_to), 
-            albumentations.Normalize(mean, std, max_pixel_value=255, always_apply=True), 
-            albumentations.pytorch.transforms.ToTensor()
-        ])
-
-        train_images, val_images, train_targets, val_targets = train_test_split(images, targets, stratify=targets, train_size=0.9)
-
-        train_dataset = PneumothoraxImageDataset(train_images, train_targets, augmentation=aug)
-        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
-
-        val_dataset = PneumothoraxImageDataset(train_images, train_targets, augmentation=aug)
-        val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
-        model = blackbox_config['model_constructor'](weights='IMAGENET1K_V1')
-        is_inception = blackbox_config['is_inception']
-        model = model.to(device)
-        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-        criterion = nn.CrossEntropyLoss()
-        dataloaders_dict = { "train": train_loader, "val": val_loader }
-        model, history = train_model(model, dataloaders_dict, optimizer, criterion, epochs, is_inception)
-        torch.save(model.state_dict(), f'{output_folder}{model_name}.pth')
 
