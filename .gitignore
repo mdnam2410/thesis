@@ -161,4 +161,6 @@ cython_debug/
 
 SALIENCY_DISAGREEMENT/SOURCE/datasets
 SALIENCY_DISAGREEMENT/SOURCE/pretrained_weights
+SALIENCY_DISAGREEMENT/SOURCE/explanations
 *.zip
+.vscode/
