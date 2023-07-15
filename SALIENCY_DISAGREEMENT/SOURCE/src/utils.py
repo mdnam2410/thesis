@@ -35,8 +35,8 @@ class PneumothoraxImageDataset(Dataset):
 
 
 # ---- Constants -----
-DS_PNEUMOTHORAX = 'pneumothorax'
-DS_PNEUMONIA = 'pneumonia'
+DS_PNEUMOTHORAX = 'Pneumothorax'
+DS_PNEUMONIA = 'Pneumonia'
 
 # Black boxes
 BLACK_BOX_NAMES = ['InceptionV3', 'ResNet']
@@ -123,3 +123,7 @@ def get_dataset_loader(env, dataset, batch_size):
         ds_loader = torch.utils.data.DataLoader(
             test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
     return ds_loader
+
+def make_dir_if_not_exist(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
