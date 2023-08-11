@@ -1,0 +1,65 @@
+\subsection{Overall Discussion}
+One key observation from the analysis of the four metrics is that the agreement scores exhibit considerable variations when evaluating different black boxes. In particular, the disagreement exists more when explaining ResNet-101 than for InceptionV3. This observation also stands for all metrics and datasets.
+
+However, when considering the same black box, the relative level of disagreement between pairs of explanation methods tends to remain consistent across all metrics and dataset (except for SSIM). This observation implies that the extent of disagreement is more influenced by the specific type of black box being explained rather than the source dataset used to train the black box. This finding contradicts the claim made in \cite{disagreementCounterfactual} that the magnitude of the disagreement issue is independent of the classifier. It suggests that the underlying problems may have deeper roots, potentially related to the characteristics of the explanation methods themselves. Therefore, we recommend further research to thoroughly investigate and provide a definitive explanation for this phenomenon.
+While there are variations in the levels of disagreement across different metrics, black boxes, and datasets, some pairs of explanation methods exhibit remarkable consistency. Particularly noteworthy are the three methods: Guided Grad-CAM, Guided Backpropagation, and Saliency. Table \ref{tab:compareGbGgcSl} provides an overview of the agreement scores for these three pairs of methods. The Guided Grad-CAM--Guided Backpropagation pair consistently achieves high agreement scores across all scenarios. The pairs Saliency--Guided Grad-CAM and Saliency--Guided Backpropagation consistently exhibit agreement when explaining InceptionV3, but consistently show disagreement when explaining ResNet-101, often by a significant margin.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llcccccccc}
+\hline
+\multicolumn{1}{c}{\multirow{2}{*}{Pair}} &
+  \multicolumn{1}{c}{\multirow{2}{*}{Dataset}} &
+  \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}Feature Agreement\\ (top 10\%)\end{tabular}} &
+  \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}Sign Agreement\\ (top 10\%)\end{tabular}} &
+  \multicolumn{2}{c}{Rank Correlation} &
+  \multicolumn{2}{c}{SSIM} \\ \cline{3-10} 
+\multicolumn{1}{c}{} &
+  \multicolumn{1}{c}{} &
+  InceptionV3 &
+  ResNet &
+  InceptionV3 &
+  ResNet &
+  InceptionV3 &
+  ResNet &
+  InceptionV3 &
+  ResNet \\ \hline
+\begin{tabular}[c]{@{}l@{}}GuidedBackprop–\\ GuidedGradCAM\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Pneumothorax\\ Pneumonia\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.95\\ 0.96\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.84\\ 0.82\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.95\\ 0.96\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.80\\ 0.82\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}1.00\\ -\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.99\\ -\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.99\\ 1.0\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.92\\ 0.90\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}GuidedBackprop–\\ Saliency\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Pneumothorax\\ Pneumonia\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.92\\ 0.88\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.36\\ 0.38\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.47\\ 0.43\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.19\\ 0.29\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.88\\ -\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.32\\ -\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.98\\ 0.98\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.29\\ 0.33\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}l@{}}GuidedGradCAM\\ –Saliency\end{tabular} &
+  \begin{tabular}[c]{@{}l@{}}Pneumothorax\\ Pneumonia\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.91\\ 0.88\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.38\\ 0.41\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.45\\ 0.43\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.22\\ 0.31\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.88\\ -\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.32\\ -\end{tabular} &
+  \textbf{\begin{tabular}[c]{@{}c@{}}0.97\\ 0.98\end{tabular}} &
+  \begin{tabular}[c]{@{}c@{}}0.27\\ 0.30\end{tabular} \\ \hline
+\end{tabular}%
+}
+\caption{Comparison of the metric scores for every pair of the methods Guided Backpropagation, Guided Grad-CAM and Saliency.}
+\label{tab:compareGbGgcSl}
+\end{table}

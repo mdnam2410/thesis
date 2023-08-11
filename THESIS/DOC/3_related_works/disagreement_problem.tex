@@ -8,6 +8,24 @@ Krishna et al. \cite{krishna_disagreement_problem} went further by formularizing
 
 Brughmans et al.'s study \cite{disagreementCounterfactual} investigates the issue of disagreement among counterfactual explanation algorithms, which describe a set of feature changes that can affect the predicted class of a black box model. In other words, such explanations explore the question of ``what would the prediction be if a particular feature were to change in a certain way?''. This approach is different from saliency maps in which counterfactual explanations explain the prediction using \emph{changes} in input features, while saliency maps interpret by \emph{attributing} each pixel a feature importance value. The research confirmed the presence of disagreement among counterfactual explanation methods and highlighted a notable discovery that the degree of disagreement is predominantly contingent on the dataset and methods utilized, rather than the type of classifiers employed.
 
+\begin{table}[htbp]
+\resizebox{\columnwidth}{!}{\begin{tabular}{llllll}
+\hline
+Authors &  Nb. of datasets & Data types & Nb. of xAI methods & Nb. of models & XAI\\ 
+\hline
+Neely et al. [1] & 5 & Text & 6 & 2 & LIME, Integrated Gradients (IG), DeepLift, Grad-SHAP, \\ 
+& & & & & Deep-SHAP \& attention-based explanations \\
+\hline
+ Krishna et al. [2] & 4 & Tabular, & 6 & 8 & LIME, Kernel SHAP, IG, \\
+ & & Text \& Image & & & Smooth-Grad, Input*Grad, Gradient \\ 
+\hline
+Roy et al. [3] & 4 & Tabular & 2 & 1 & LIME, SHAP \\ 
+\hline
+Brughmans et al. [4] & 40 & Tabular & 12 & 2 & SHAP, Counterfactuals \& Anchor \\ 
+\end{tabular}}
+\end{table}
+
+
 \subsection{How is Disagreement Measured?}
 \label{subsec:howIsDisagreementMeasured}
 Since there is a lack of common evaluation frameworks, the measurement of disagreement is yet to be concretely defined and generally depends on the nature of the problem and the explanation methods chosen. Currently, there are two approaches to measuring disagreement: using set-based metrics and using correlation.
