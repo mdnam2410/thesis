@@ -1,9 +1,14 @@
 \section{Experiments}
-To evaluate post-hoc XAI methods, our experiment consists of two stages. In the first stage, we train black boxes on a classification task using the designated Chest X-ray Images with Pneumothorax Masks dataset \ref{subsec:dataset}. In the second stage, we apply XAI methods to the trained models to gain insights into their decision-making process and interpret the underlying factors that contribute to their predictions. By analyzing the explanations provided by the XAI methods, we aim to understand the model's behavior and assess its transparency and interpretability.
+To evaluate post-hoc XAI methods, our experiment consists of two stages. In the first stage, we train black boxes on the X-ray image classification task. In the second stage, we apply XAI methods to the trained models to gain insights into their decision-making process and interpret the underlying factors that contribute to their predictions. By analyzing the explanations provided by the XAI methods, we aim to understand the model's behavior and assess its transparency and interpretability.
+
+
 
 The development environment in which the experiments were conducted are summarized in table \ref{table:env}.
 
-\begin{table}[t]
+
+\input{5_results/dataset}
+
+\begin{table}[h!]
 \caption{Experiment environments and requirements.}\label{table:env}
 \centering
 \begin{tabular}{ll}
